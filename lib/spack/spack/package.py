@@ -1595,7 +1595,7 @@ class PackageBase(with_metaclass(PackageMeta, PackageViewMixin, object)):
         Args:
             exe (str): the name of the executable
             options (list of str): list of options to pass to the runner
-            expected (list of str): list of expected output strings. Each
+            expected (str or list of str): list of expected output strings. Each
                 string is a regex expected to match part of the output.
             status (int, list of int, or None): possible passing status values
                 with 0 and None meaning the test is expected to succeed
@@ -1668,6 +1668,7 @@ class PackageBase(with_metaclass(PackageMeta, PackageViewMixin, object)):
     def _run_test_helper(self, runner, options, expected, status, installed,
                          purpose):
         status = [status] if not isinstance(status, list) else status
+        expected = [expected] if not isinstance(expected, list) else expected
         if purpose:
             tty.msg(purpose)
         else:
